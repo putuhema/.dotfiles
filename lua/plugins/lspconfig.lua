@@ -47,9 +47,18 @@ return {
 
       -- TypeScript/JavaScript (React, Next.js, Astro, Vue, Svelte)
       lspconfig.tsserver.setup({
-        on_attach = function(client)
+        on_attach = function(client, bufnr)
           client.server_capabilities.documentFormattingProvider = false -- Let prettier handle formatting
+
+          vim.api.nvim_buf_set_keymap(
+            bufnr,
+            "n",
+            "gd",
+            '<cmd>lua require("telescope.builtin").lsp_definitions({ reuse_win = true })<cr>',
+            { noremap = true, silent = true }
+          )
         end,
+
         filetypes = {
           "javascript",
           "javascriptreact",
@@ -177,6 +186,52 @@ return {
 
       -- Enable inlay hints globally
       vim.lsp.inlay_hint.enable(true)
+    end,
+  },
+
+  -- Custom keymaps for LSP
+  {
+    "neovim/nvim-lspconfig",
+    opts = function()
+      local keys = require("lazyvim.plugins.lsp.keymaps").get()
+      vim.list_extend(keys, {
+        {
+          "gd",
+          function()
+            require("telescope.builtin").lsp_definitions({ reuse_win = true })
+          end,
+          desc = "Goto Definition",
+          has = "definition",
+        },
+        { "gr", "<cmd>Telescope lsp_references<cr>", desc = "References", nowait = true },
+        {
+          "gI",
+          function()
+            require("telescope.builtin").lsp_implementations({ reuse_win = true })
+          end,
+          desc = "Goto Implementation",
+        },
+        {
+          "gy",
+          function()
+            require("telescope.builtin").lsp_type_definitions({ reuse_win = true })
+          end,
+          desc = "Goto T[y]pe Definition",
+        },
+        {
+          "<leader>ca",
+          vim.lsp.buf.code_action,
+          desc = "Code Action",
+          mode = { "n", "v" },
+          has = "codeAction",
+        },
+        {
+          "<leader>rn",
+          vim.lsp.buf.rename,
+          desc = "Rename",
+          has = "rename",
+        },
+      })
     end,
   },
 }
