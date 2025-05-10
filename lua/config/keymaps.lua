@@ -38,6 +38,14 @@ keymap.set("n", "<Leader>O", "O<Esc>^Da", opts)
 -- Jumplist
 keymap.set("n", "<C-m>", "<C-i>", opts)
 
+-- Escaping insert mode
+keymap.set("i", "jj", "<Esc>")
+keymap.set("i", "jk", "<Esc>:w<CR>")
+
+-- Suggestion Selection
+keymap.set("i", "<C-j", "<C-n>")
+keymap.set("i", "<C-K", "<C-p>")
+
 -- Remap
 keymap.set("n", "<C-d>", "<C-d>zz")
 keymap.set("n", "<C-u>", "<C-u>zz")
@@ -46,9 +54,9 @@ keymap.set("n", "<C-b>", "<C-b>zz")
 keymap.set("n", "Y", "yy")
 
 -- New tab
-keymap.set("n", "te", ":tabedit")
-keymap.set("n", "<tab>", ":tabnext<Return>", opts)
-keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
+-- keymap.set("n", "te", ":tabedit")
+-- keymap.set("n", "<tab>", ":tabnext<Return>", opts)
+-- keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
 -- Split window
 keymap.set("n", "ss", ":split<Return>", opts)
 keymap.set("n", "sv", ":vsplit<Return>", opts)
@@ -63,15 +71,3 @@ keymap.set("n", "<C-w><left>", "<C-w><")
 keymap.set("n", "<C-w><right>", "<C-w>>")
 keymap.set("n", "<C-w><up>", "<C-w>+")
 keymap.set("n", "<C-w><down>", "<C-w>-")
-
-keymap.set("n", "<leader>r", function()
-  require("craftzdog.hsl").replaceHexWithHSL()
-end)
-
-keymap.set("n", "<leader>i", function()
-  require("craftzdog.lsp").toggleInlayHints()
-end)
-
-vim.api.nvim_create_user_command("ToggleAutoformat", function()
-  require("craftzdog.lsp").toggleAutoformat()
-end, {})
