@@ -1,20 +1,10 @@
 return {
   {
-    "ellisonleao/gruvbox.nvim",
+    "xero/miasma.nvim",
+    lazy = false,
     priority = 1000,
     config = function()
-      require("gruvbox").setup({
-        transparenT_mode = true,
-        terminal_colors = true,
-      })
-      vim.cmd("colorscheme gruvbox")
+      vim.cmd("colorscheme miasma")
     end,
-  },
-
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "gruvbox",
-    },
   },
 }
