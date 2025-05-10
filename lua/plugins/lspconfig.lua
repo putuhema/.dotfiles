@@ -7,6 +7,7 @@ return {
         "selene", -- Lua linter
         "luacheck", -- Lua linter
         "shellcheck", -- Shell script linter
+        "biome", -- Biome formatter
         "shfmt", -- Shell script formatter
         "prettierd", -- JS/TS/JSX/TSX formatter
         "eslint_d", -- JS/TS linter
@@ -188,18 +189,25 @@ return {
         {
           "gd",
           function()
-            require("telescope.builtin").lsp_definitions({ reuse_win = false })
+            require("telescope.builtin").lsp_definitions({ reuse_win = true })
           end,
           desc = "Goto Definition",
           has = "definition",
         },
+        { "gr", "<cmd>Telescope lsp_references<cr>", desc = "References", nowait = true },
         {
-          "gr",
+          "gI",
           function()
-            require("telescope.builtin").lsp_references({ reuse_win = false })
+            require("telescope.builtin").lsp_implementations({ reuse_win = true })
           end,
-          desc = "Goto References",
-          has = "references",
+          desc = "Goto Implementation",
+        },
+        {
+          "gy",
+          function()
+            require("telescope.builtin").lsp_type_definitions({ reuse_win = true })
+          end,
+          desc = "Goto T[y]pe Definition",
         },
         {
           "<leader>ca",
